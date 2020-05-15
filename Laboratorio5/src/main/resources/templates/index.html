@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form th:action="@{/Validar}" th:object = "${estudiante}" method="post">
+
+<label>Nombre:</label> <input type="text" th:field="${estudiante.nombre}"> <br>
+<span th:errors="${estudiante.Nombre}" style="color:  #E81505;"></span><br>
+
+<label>Apellido:</label> <input type="text" th:field="${estudiante.apellido}"> <br>
+<span th:errors="${estudiante.Apellido}" style="color:  #E81505;"></span><br>
+
+<label>Carne:</label> <input type="number" th:field="${estudiante.carne}"><br>
+<span th:errors="${estudiante.carne}" style="color:  #E81505;"></span><br>
+
+<label>Carrera:</label> <input type="text" th:field="${estudiante.carrera}"><br>
+<span th:errors="${estudiante.carrera}" style="color:  #E81505;"></span><br><br>
+
+<input type="submit" value="ingresar">
+
+</form>
+<a href="listado">Listado</a>
+</body>
+</html>
