@@ -5,6 +5,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h1>Ingresar un estudiante - Para ver los cambios verifique el listado</h1>
 <form th:action="@{/Validar}" th:object = "${estudiante}" method="post">
 
 <label>Nombre:</label> <input type="text" th:field="${estudiante.nombre}"> <br>
@@ -22,6 +23,22 @@
 <input type="submit" value="ingresar">
 
 </form>
+<br>
+<br>
+<br>
+<h1>Eliminar por codigo del estudiante - Para ver los cambios verifique el listado</h1>
+<form th:action="@{/eliminado}" method="post">
+<label>Codigo: </label><input type="text" name="codigo"> 
+<br>
+<br>
+<br>
+<input type="submit" value="Eliminar">
+<br>
+<br>
+<br>
+
+</form>
+
 <a href="listado">Listado</a>
 </body>
 </html>

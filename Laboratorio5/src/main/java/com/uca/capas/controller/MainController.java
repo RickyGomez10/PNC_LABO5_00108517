@@ -71,7 +71,20 @@ public class MainController {
 		mav.setViewName("index"); 
 		return mav;
 	}
-		
+	@RequestMapping(value="/eliminado", method= RequestMethod.POST)
+	public ModelAndView insertar(@RequestParam(value="codigo") int id) {
+		ModelAndView mav = new ModelAndView();
+		Estudiante estudiante = null;
+		try {
+		estudiante = estudianteDAO.findOne(id);
+		estudianteDAO.eliminar(estudiante);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		mav.addObject("estudiante",estudiante);
+		mav.setViewName("index");
+		return mav;
+	}
 		
 		
 	
