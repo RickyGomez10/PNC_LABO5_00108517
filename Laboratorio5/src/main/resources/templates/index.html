@@ -20,8 +20,25 @@
 <label>Carrera:</label> <input type="text" th:field="${estudiante.carrera}"><br>
 <span th:errors="${estudiante.carrera}" style="color:  #E81505;"></span><br><br>
 
-<input type="submit" value="ingresar">
+<input type="submit" value="ingresar"> 
 
+
+</form>
+
+<br>
+<br>
+<br>
+<h1>Modificar por codigo de estudiante </h1>
+<form th:action="@{/modificar}" th:object = ${estudiante} method="post">
+<br>
+<br>
+<br>
+<label>Seleccione el codigo que desea editar: </label>
+<select th:field= "*{codigoEstudiante}" > <option th:each ="est : ${estudiantes}" th:text="${est.codigoEstudiante}" th:value="${est.codigoEstudiante}"></select> <br> <br>
+<br>
+<br>
+<br>
+<input type="submit" value="Editar">
 </form>
 <br>
 <br>
@@ -40,5 +57,7 @@
 </form>
 
 <a href="listado">Listado</a>
+<br><br>
+<a href="modificar">Modificar estudiante</a>
 </body>
 </html>

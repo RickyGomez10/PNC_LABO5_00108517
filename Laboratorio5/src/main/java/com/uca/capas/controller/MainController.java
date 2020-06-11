@@ -16,29 +16,45 @@ import org.springframework.web.servlet.ModelAndView;
 import com.uca.capas.dao.EstudianteDAO;
 import com.uca.capas.dao.EstudianteDAOImpl;
 import com.uca.capas.domain.Estudiante;
+import com.uca.capas.service.EstudianteService;
 
 @Controller
 public class MainController {
 	@Autowired
-	private EstudianteDAO estudianteDAO;
+	private EstudianteService estudianteService;
 	
 	@RequestMapping("/index")
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView();
 		Estudiante estudiante = new Estudiante();
+		Estudiante estudiante2 = new Estudiante();
+		
+		List<Estudiante>  estudiantes = null;
+		
+		try {
+			estudiantes = estudianteService.findAll();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 		mav.addObject("estudiante",estudiante);
+		mav.addObject("estudiantes",estudiantes);
 		mav.setViewName("index");
 		
 		return mav;
 	}
 	
-	//Mostrar lista de Estudiantes
+	
+	
+	//Mostrar lista de Estudiantes                     
 	@RequestMapping("/listado")
 	public ModelAndView initMain() {
 		ModelAndView mav = new ModelAndView();
 		List<Estudiante>  estudiantes = null;
 		try {
-			estudiantes = estudianteDAO.findAll();
+			estudiantes = estudianteService.findAll();
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -53,11 +69,12 @@ public class MainController {
 	@RequestMapping(value="/Validar", method = RequestMethod.POST)
 		public ModelAndView insertar(@Valid @ModelAttribute Estudiante estudiante, BindingResult result) {
 		ModelAndView mav = new ModelAndView();
+		
 		if(!result.hasErrors()) {
 			
 			
 		try {
-			estudianteDAO.insertar(estudiante);
+			estudianteService.insertar(estudiante);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -65,27 +82,64 @@ public class MainController {
 		estudiante = new Estudiante();
 		mav.addObject("estudiante",estudiante);
 			
-			
 		}
 		
 		mav.setViewName("index"); 
 		return mav;
 	}
 	@RequestMapping(value="/eliminado", method= RequestMethod.POST)
-	public ModelAndView insertar(@RequestParam(value="codigo") int id) {
+	public ModelAndView eliminar(@RequestParam(value="codigo") int id) {
 		ModelAndView mav = new ModelAndView();
+
 		Estudiante estudiante = null;
 		try {
-		estudiante = estudianteDAO.findOne(id);
-		estudianteDAO.eliminar(estudiante);
+		//estudiante = estudianteService.findOne(id);
+		estudianteService.eliminar(id);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		mav.addObject("estudiante",estudiante);
-		mav.setViewName("index");
+		
+		mav.setViewName("eliminado");
 		return mav;
 	}
 		
+	@RequestMapping("/modificar")
+	public ModelAndView initMain2(@ModelAttribute Estudiante estudiante) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			estudiante = estudianteService.findOne(estudiante.getCodigoEstudiante());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		mav.addObject("estudiante", estudiante);
+		mav.setViewName("Modificar");
+		return mav;
+		
+	}
+	
+	@RequestMapping(value="/Modificado", method = RequestMethod.POST)
+	public ModelAndView modificar(@Valid @ModelAttribute Estudiante estudiante, BindingResult result) {
+	ModelAndView mav = new ModelAndView();
+	List<Estudiante>  estudiantes = null;
+	if(!result.hasErrors()) {
+		
+		
+	try {
+		estudianteService.insertar(estudiante);
+		
+	}catch(Exception e) {
+		e.printStackTrace();
+	}
+	estudiante = new Estudiante();
+	mav.addObject("estudiante",estudiante);
+		
+		
+	}
+	
+	mav.setViewName("Modificar"); 
+	return mav;
+}
 		
 	
 }
